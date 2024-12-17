@@ -2,7 +2,7 @@
 #define LIST_H
 
 #include <initializer_list>
-
+#include <memory>
 /*
 default implementation -> double linked list 
 */
@@ -13,14 +13,15 @@ class List{
 private:
     struct Node{
         type value;
-        Node* NEXT;
-        Node* PREV;
+        std::shared_ptr<Node> NEXT;
+        std::shared_ptr<Node> PREV;
 
-        Node(type data) : value(data) , NEXT(nullptr);
+        Node(type data) : value(data) , NEXT(nullptr) , PREV(nullptr){};
     };
-
-    Node* head_ptr;
-    Node* tail_ptr;
+    int size = 0;
+    std::shared_ptr<Node> head_ptr;
+    std::shared_ptr<Node> tail_ptr;
+    
 
 public:
     //initlize list empty
@@ -32,7 +33,7 @@ public:
     List& operator=(const List& other);
 
     List(List&& other) noexcept;
-    List& operator=(const List&& other) noexcept; 
+    List& operator=(List&& other) noexcept; 
 
     ~List() = default;
 
@@ -46,7 +47,7 @@ public:
     type pop_back();
     void remove(type value);
     void erase(int position);
-    Node* clear();
+    void clear();
 
     // HELPER FUNCTION
     int isEmpty();
@@ -62,8 +63,11 @@ public:
     void merge();
     void unqiue();
     void copy_from();
+    void print();
 
 };
 
 
+
+#include "/home/aman/code/metaalgo/src/ds/linear/linkedList/List.cpp"
 #endif
